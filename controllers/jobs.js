@@ -5,8 +5,29 @@ const getAllJobs = async (req, res) => {
     return res.status(200).json({ jobs, count: jobs.length })
 }
 
+const getJob = async (req, res) => {
+
+    const {
+      user: { userId },
+      params: { id: jobId },
+    } = req
+  
+    const job = await JobModel.findOne({
+      _id: jobId,
+      createdBy: userId,
+    })
+    
+    if (!job) {
+      return res.status(404).json({ message: 'job not found' })
+    }
+    
+    return res.status(200).json({ job })
+
+}
+
 
 
 module.exports = {
-    getAllJobs
+    getAllJobs,
+    getJob
 }
