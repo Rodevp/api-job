@@ -6,8 +6,8 @@ require('dotenv').config()
 const connectDB = require('./db/connect')
 
 //middlewares
-app.use( express.json() )
 app.use( helmet() )
+app.use( express.json() )
 
 app.get('/', (_req, res) => {
     res.send('<h1>Jobs API</h1>')
