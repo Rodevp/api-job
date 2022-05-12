@@ -1,4 +1,4 @@
-const JobModel = require('../models/Job')
+const JobModel = require('../models/jobs.js')
 
 const getAllJobs = async (req, res) => {
     const jobs = await JobModel.find({ createdBy: req.user.userId }).sort('createdAt')
@@ -59,10 +59,31 @@ const updateJob = async (req, res) => {
 
 }
 
+const deleteJob = async (req, res) => {
+    
+    const {
+      user: { userId },
+      params: { id: jobId },
+    } = req
+  
+    const job = await JobModel.findByIdAndRemove({
+      _id: jobId,
+      createdBy: userId,
+    })
+    
+    if (!job) {
+      return res.status(404).json({message: 'job not found'})
+    }
+    
+    return res.status(200).send()
+
+}
+
 
 module.exports = {
     getAllJobs,
     getJob,
     createJob,
-    updateJob
+    updateJob,
+    deleteJob
 }
