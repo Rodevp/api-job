@@ -5,7 +5,8 @@ const app = express()
 require('dotenv').config()
 
 //routers
-const jobsRouter = require('./routes/jobs');
+const jobsRouter = require('./routes/jobs.routes.js')
+const authRouter = require('./routes/auth.routes.js')
 
 
 //middlewares
@@ -18,6 +19,7 @@ app.get('/', (_req, res) => {
 })
 
 //routes
+app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs', jobsRouter)
 
 
